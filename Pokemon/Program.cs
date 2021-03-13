@@ -65,29 +65,59 @@ namespace Pokemon
 
                     case "fight":
                         //PRINT INSTRUCTIONS AND POSSIBLE POKEMONS (SEE SLIDES FOR EXAMPLE OF EXECUTION)
-                        Console.Write("Choose who should fight: ");
+                        Console.WriteLine("Choose who should fight: ");
 
                         //READ INPUT, REMEMBER IT SHOULD BE TWO POKEMON NAMES
-                        string inputPlayer = Console.ReadLine();
-                        Console.Write(" vs ");
-                        string inputEnemy = Console.ReadLine();
-
                         //BE SURE TO CHECK THE POKEMON NAMES THE USER WROTE ARE VALID (IN THE ROSTER) AND IF THEY ARE IN FACT 2!
+                        
                         Pokemon player = null;
-                        Pokemon enemy = null;
+                        int playerPokemonTrue = 0;
 
-                        foreach (Pokemon pokemon in roster)
+                        do
                         {
-                            if (inputPlayer == pokemon.Name)
+                            playerPokemonTrue = 0;
+                            Console.Write("Your Pokemon: ");
+                            string inputPlayer = Console.ReadLine();
+
+                            foreach (Pokemon pokemon in roster)
                             {
-                                player = pokemon;
+                                if (inputPlayer == pokemon.Name)
+                                {
+                                    player = pokemon;
+                                    playerPokemonTrue++;
+                                }
                             }
 
-                            if (inputEnemy == pokemon.Name)
+                            if (playerPokemonTrue == 0)
                             {
-                                enemy = pokemon;
+                                Console.WriteLine("That Pokemon doesnt exist");
                             }
-                        }
+                        } while (playerPokemonTrue == 0);
+                        
+
+                        Pokemon enemy = null;
+                        int enemyPokemonTrue = 0;
+
+                        do
+                        {
+                            enemyPokemonTrue = 0;
+                            Console.Write("Oppenent Pokemon: ");
+                            string inputEnemy = Console.ReadLine();
+
+                            foreach (Pokemon pokemon in roster)
+                            {
+                                if (inputEnemy == pokemon.Name)
+                                {
+                                    enemy = pokemon;
+                                    enemyPokemonTrue++;
+                                }
+                            }
+
+                            if (enemyPokemonTrue == 0)
+                            {
+                                Console.WriteLine("That Pokemon doesnt exist");
+                            }
+                        } while (enemyPokemonTrue == 0);
 
                         //if everything is fine and we have 2 pokemons let's make them fight
                         if (player != null && enemy != null && player != enemy)
@@ -99,10 +129,38 @@ namespace Pokemon
                             while (player.Hp > 0 && enemy.Hp > 0)
                             {
                                 //PRINT POSSIBLE MOVES
-                                Console.Write("What move should we use? (");
+                                Console.WriteLine("What move should we use? -> ");
+
+                                foreach (Move moves in player.Moves)
+                                {
+                                    Console.WriteLine(moves.Name);
+                                }
+
 
                                 //GET USER ANSWER, BE SURE TO CHECK IF IT'S A VALID MOVE, OTHERWISE ASK AGAIN
                                 int move = -1;
+                                int moveTrue = 0;
+
+                                do
+                                {
+                                    Console.Write("What move should we use? -> ");
+                                    moveTrue = 0;
+
+                                    string moveInput = Console.ReadLine();
+                                    foreach (Move moves in player.Moves)
+                                    {
+                                        if (moveInput == moves.Name)
+                                        {
+                                            moveTrue++;
+                                        }
+                                    }
+
+                                    if (moveTrue == 0)
+                                    {
+                                        Console.WriteLine("That Move doesn't exist");
+                                    }
+                                } while (moveTrue == 0);
+
 
                                 //CALCULATE AND APPLY DAMAGE
                                 int damage = -1;

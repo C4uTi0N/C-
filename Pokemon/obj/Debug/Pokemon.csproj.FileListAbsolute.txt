@@ -15,3 +15,12 @@ C:\Users\petec\OneDrive\Skrivebord\Pokemon\obj\Debug\Pokemon.csproj.CoreCompileI
 C:\Users\petec\OneDrive\Skrivebord\Pokemon\obj\Debug\Pokemon.csproj.CopyComplete
 C:\Users\petec\OneDrive\Skrivebord\Pokemon\obj\Debug\Pokemon.exe
 C:\Users\petec\OneDrive\Skrivebord\Pokemon\obj\Debug\Pokemon.pdb
+D:\OneDrive\School\SDU\3D programmering\C#\Pokemon\bin\Debug\Pokemon.exe.config
+D:\OneDrive\School\SDU\3D programmering\C#\Pokemon\bin\Debug\Pokemon.exe
+D:\OneDrive\School\SDU\3D programmering\C#\Pokemon\bin\Debug\Pokemon.pdb
+D:\OneDrive\School\SDU\3D programmering\C#\Pokemon\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\OneDrive\School\SDU\3D programmering\C#\Pokemon\obj\Debug\Pokemon.csprojAssemblyReference.cache
+D:\OneDrive\School\SDU\3D programmering\C#\Pokemon\obj\Debug\Pokemon.csproj.CoreCompileInputs.cache
+D:\OneDrive\School\SDU\3D programmering\C#\Pokemon\obj\Debug\Pokemon.csproj.CopyComplete
+D:\OneDrive\School\SDU\3D programmering\C#\Pokemon\obj\Debug\Pokemon.exe
+D:\OneDrive\School\SDU\3D programmering\C#\Pokemon\obj\Debug\Pokemon.pdb
