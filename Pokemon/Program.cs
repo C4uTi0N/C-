@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//Made by Peter Frandsen
+
 namespace Pokemon
 {
     class Program
@@ -46,7 +48,8 @@ namespace Pokemon
             roster.Add(squirtle);
             roster.Add(bulbasaur);
 
-
+            Pokemon player = null;
+            Pokemon enemy = null;
 
             Console.WriteLine("Welcome to the world of Pokemon!\nThe available commands are list/fight/heal/quit");
 
@@ -70,12 +73,12 @@ namespace Pokemon
                         //READ INPUT, REMEMBER IT SHOULD BE TWO POKEMON NAMES
                         //BE SURE TO CHECK THE POKEMON NAMES THE USER WROTE ARE VALID (IN THE ROSTER) AND IF THEY ARE IN FACT 2!
                         
-                        Pokemon player = null;
-                        int playerPokemonTrue = 0;
+                        
+                        bool playerPokemon = false;
 
                         do
                         {
-                            playerPokemonTrue = 0;
+                            playerPokemon = false;
                             Console.Write("Your Pokemon: ");
                             string inputPlayer = Console.ReadLine();
 
@@ -84,23 +87,24 @@ namespace Pokemon
                                 if (inputPlayer == pokemon.Name)
                                 {
                                     player = pokemon;
-                                    playerPokemonTrue++;
+                                    playerPokemon = true;
                                 }
                             }
 
-                            if (playerPokemonTrue == 0)
+                            if (!playerPokemon)
                             {
                                 Console.WriteLine("That Pokemon doesnt exist");
+                                player = null;
                             }
-                        } while (playerPokemonTrue == 0);
+                        } while (!playerPokemon);
                         
 
-                        Pokemon enemy = null;
-                        int enemyPokemonTrue = 0;
+                        
+                        bool enemyPokemon = false;
 
                         do
                         {
-                            enemyPokemonTrue = 0;
+                            enemyPokemon = false;
                             Console.Write("Oppenent Pokemon: ");
                             string inputEnemy = Console.ReadLine();
 
@@ -109,77 +113,78 @@ namespace Pokemon
                                 if (inputEnemy == pokemon.Name)
                                 {
                                     enemy = pokemon;
-                                    enemyPokemonTrue++;
+                                    enemyPokemon = true;
                                 }
                             }
 
-                            if (enemyPokemonTrue == 0)
+                            if (!enemyPokemon)
                             {
                                 Console.WriteLine("That Pokemon doesnt exist");
+                                enemy = null;
                             }
-                        } while (enemyPokemonTrue == 0);
+                        } while (!enemyPokemon);
 
                         //if everything is fine and we have 2 pokemons let's make them fight
                         if (player != null && enemy != null && player != enemy)
                         {
-                            Console.WriteLine("A wild " + enemy.Name + " appears!");
-                            Console.Write(player.Name + " I choose you! ");
+                            Console.WriteLine("\nA wild " + enemy.Name + " appears!");
+                            Console.WriteLine(player.Name + " I choose you! ");
+                            Console.WriteLine("\n" + player.Name + "'s Moves:");
 
                             //BEGIN FIGHT LOOP
                             while (player.Hp > 0 && enemy.Hp > 0)
                             {
-                                //PRINT POSSIBLE MOVES
-                                Console.WriteLine("What move should we use? -> ");
+                                int move = -1;
 
+                                //PRINT POSSIBLE MOVES
                                 foreach (Move moves in player.Moves)
                                 {
-                                    Console.WriteLine(moves.Name);
+                                    move++;
+                                    Console.WriteLine(move + ": " + moves.Name);
                                 }
 
 
                                 //GET USER ANSWER, BE SURE TO CHECK IF IT'S A VALID MOVE, OTHERWISE ASK AGAIN
-                                int move = -1;
-                                int moveTrue = 0;
+                                bool moveTrue = false;
 
                                 do
                                 {
-                                    Console.Write("What move should we use? -> ");
-                                    moveTrue = 0;
+                                    Console.WriteLine("What move should we use? -> ");
+                                    move = int.Parse(Console.ReadLine());
+                                    moveTrue = false;
 
-                                    string moveInput = Console.ReadLine();
-                                    foreach (Move moves in player.Moves)
+                                    if (!moveTrue)
                                     {
-                                        if (moveInput == moves.Name)
-                                        {
-                                            moveTrue++;
-                                        }
+                                        Console.WriteLine("That move number doesn't exist");
                                     }
-
-                                    if (moveTrue == 0)
-                                    {
-                                        Console.WriteLine("That Move doesn't exist");
-                                    }
-                                } while (moveTrue == 0);
+                                } while (!moveTrue);
 
 
                                 //CALCULATE AND APPLY DAMAGE
                                 int damage = -1;
 
+                                damage = player.Attack(enemy);
+
                                 //print the move and damage
                                 Console.WriteLine(player.Name + " uses " + player.Moves[move].Name + ". " + enemy.Name + " loses " + damage + " HP");
 
+                                Console.ReadLine();
                                 //if the enemy is not dead yet, it attacks
                                 if (enemy.Hp > 0)
                                 {
                                     //CHOOSE A RANDOM MOVE BETWEEN THE ENEMY MOVES AND USE IT TO ATTACK THE PLAYER
+                                    int enemyMove = -1;
+                                    int enemyDamage = -1;
+
                                     Random rand = new Random();
+                                    enemyMove = rand.Next(0, enemy.Moves.Count);
+                                    enemyDamage = enemy.Attack(player);
+
                                     /*the C# random is a bit different than the Unity random
                                      * you can ask for a number between [0,X) (X not included) by writing
                                      * rand.Next(X) 
                                      * where X is a number 
-                                     */
-                                    int enemyMove = -1;
-                                    int enemyDamage = -1;
+                                     */                                
 
                                     //print the move and damage
                                     Console.WriteLine(enemy.Name + " uses " + enemy.Moves[enemyMove].Name + ". " + player.Name + " loses " + enemyDamage + " HP");
@@ -204,6 +209,9 @@ namespace Pokemon
 
                     case "heal":
                         //RESTORE ALL POKEMONS IN THE ROSTER
+
+                        player.Restore();
+                        enemy.Restore();
 
                         Console.WriteLine("All pokemons have been healed");
                         break;

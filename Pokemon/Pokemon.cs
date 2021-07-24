@@ -69,7 +69,13 @@ namespace Pokemon
         /// <returns>The amount of damage that was applied so we can print it for the user</returns>
         public int Attack(Pokemon enemy)
         {
-            throw new NotImplementedException();
+            int totalAttack = baseAttack * level;
+            int damage = (CalculateElementalEffects(totalAttack, enemy.element) - enemy.CalculateDefence()) / 10;
+
+
+            enemy.ApplyDamage(damage);
+
+            return damage;
         }
 
         /// <summary>
@@ -78,7 +84,8 @@ namespace Pokemon
         /// <returns> returns the amount of defence points considering the level as well</returns>
         public int CalculateDefence()
         {
-            throw new NotImplementedException();
+            int defence = baseDefence * level;
+            return defence;
         }
 
         /// <summary>
@@ -89,7 +96,62 @@ namespace Pokemon
         /// <returns>The damage post elemental-effect</returns>
         public int CalculateElementalEffects(int damage, Elements enemyType)
         {
-            throw new NotImplementedException();
+            switch (element)
+            {
+                case Elements.Fire:
+                    {
+                        switch (enemyType)
+                        {
+                            case Elements.Water:
+                                {
+                                    damage /= 2;
+                                    break;
+                                }
+                            case Elements.Grass:
+                                {
+                                    damage *= 2;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case Elements.Water:
+                    {
+                        switch (enemyType)
+                        {
+                            case Elements.Fire:
+                                {
+                                    damage *= 2;
+                                    break;
+                                }
+                            case Elements.Grass:
+                                {
+                                    damage /= 2;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+                case Elements.Grass:
+                    {
+                        switch (enemyType)
+                        {
+                            case Elements.Fire:
+                                {
+                                    damage /= 2;
+                                    break;
+                                }
+                            case Elements.Water:
+                                {
+                                    damage *= 2;
+                                    break;
+                                }
+                        }
+                        break;
+                    }
+            }
+
+            return damage;
         }
 
         /// <summary>
@@ -98,7 +160,12 @@ namespace Pokemon
         /// <param name="damage"></param>
         public void ApplyDamage(int damage)
         {
-            throw new NotImplementedException();
+            hp -= damage;
+
+            if (hp < 0)
+            {
+                hp = 0;
+            }
         }
 
         /// <summary>
